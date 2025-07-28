@@ -56,11 +56,11 @@ print("\nLoss orders saved to loss_orders.csv")
 # Task 8: Detect Null Values and Impute
 # Q8
 null_counts = df.isnull().sum()
-print("\nMissing Values:\n", null_counts)
-
-# Fill missing price values (if 'price' column exists)
-if 'price' in df.columns:
-    df['price'] = df['price'].fillna(1)
-    print("\nMissing 'price' values filled with 1")
-else:
-    print("\nNo 'price' column found to fill missing values.")
+print("\nMissing Values Before Handling:\n", null_counts)
+df['price'] = df['sales'] / df['quantity']
+missing_prices = df['price'].isnull().sum()
+print(f"\nNumber of missing values in 'price': {missing_prices}")
+# Fill missing price values with 1
+df['price'] = df['price'].fillna(1)
+# Recheck missing values
+print("\nMissing Values After Handling:\n", df.isnull().sum())
